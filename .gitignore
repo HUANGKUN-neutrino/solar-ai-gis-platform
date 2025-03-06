@@ -1,0 +1,16 @@
+.env
+.env.*
+node_modules/
+dist/
+build/
+data/
+uploads/
+models/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.bin
+*.log
+__pycache__/
+*.pyc
