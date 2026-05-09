@@ -2,8 +2,10 @@
 Photovoltaic generation forecasting pipeline.
 
 This module converts weather features, installed capacity and calendar signals
-into business-facing generation and revenue forecasts. Model artifacts and
-runtime credentials are loaded by the deployment environment.
+into business-facing generation and revenue forecasts. LightGBM/XGBoost are
+preferred for short-term tabular forecasting, while Transformer is kept as a
+long-sequence extension path. Model artifacts and runtime credentials are
+loaded by the deployment environment.
 """
 
 from __future__ import annotations
@@ -168,9 +170,9 @@ def resolve_engine(engine: ForecastEngine) -> ForecastEngine:
         return engine
 
     for candidate in [
-        ForecastEngine.TRANSFORMER,
         ForecastEngine.LIGHTGBM,
         ForecastEngine.XGBOOST,
+        ForecastEngine.TRANSFORMER,
     ]:
         if ForecastRuntime.available(candidate):
             return candidate
@@ -307,7 +309,7 @@ class ModelRegistry:
     @staticmethod
     def predict_sequence(engine_name: str, features: list[list[float]]) -> list[float]:
         """
-        Routes inference to Transformer, XGBoost or LightGBM engines.
+        Routes inference to LightGBM, XGBoost or Transformer engines.
         Empty output falls back to the calibrated formula model.
         """
         _ = (engine_name, features)

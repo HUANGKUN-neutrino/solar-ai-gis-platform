@@ -14,4 +14,4 @@
 
 - `map-click-identify.js` 展示地图拓客的主链路：坐标标准化、逆地理编码、周边 POI、卫星影像识别、线索评分和人工复核判断。
 - `ai-inference-service.py` 展示 AI 推理服务如何对外提供统一接口，并把图片输入、模型路由、检测框后处理和屋顶业务状态统一成稳定 API。
-- `pv-forecast-transformer.py` 展示发电量预测如何接收天气、容量和时间特征，并通过 Transformer / XGBoost / LightGBM / 公式模型输出发电量、收益和置信度。
+- `pv-forecast-transformer.py` 展示发电量预测如何接收天气、容量和时间特征，并通过 LightGBM / XGBoost / Transformer / 公式模型输出发电量、收益和置信度。

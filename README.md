@@ -6,13 +6,13 @@
 
 光伏新能源智能拓客与发电预测平台是一套面向分布式光伏企业的智能化业务系统，覆盖地图拓客、屋顶资源识别、脱敏线索管理、屋顶面积测量、收益测算、发电量预测、项目进度和售后服务等核心流程。
 
-平台以 GIS 地图工作台为入口，结合高德地图 Web 服务、卫星影像瓦片、AI 图像识别和 Transformer 发电预测模型，帮助业务人员在目标区域内快速发现可开发屋顶资源，并形成从线索发现、方案评估到项目运营的业务闭环。
+平台以 GIS 地图工作台为入口，结合高德地图 Web 服务、卫星影像瓦片、AI 图像识别、LightGBM 短期功率预测和 Transformer 长序列预测扩展方案，帮助业务人员在目标区域内快速发现可开发屋顶资源，并形成从线索发现、方案评估到项目运营的业务闭环。
 
 ## 项目亮点
 
 - **地图拓客一体化**：在同一工作台完成卫星图查看、街道图切换、地图选点、POI 识别、脱敏线索录入和屋顶资源分析。
 - **AI 屋顶资源识别**：基于 YOLO11、OpenCV 和遥感影像处理能力，识别疑似光伏板、屋顶候选区域和可安装空间。
-- **发电量预测**：基于 Transformer 时间序列模型，结合装机容量、天气、云量、降雨概率等特征预测未来发电量和收益趋势。
+- **发电量预测**：以 LightGBM / XGBoost 处理短期功率预测与表格特征建模，Transformer 作为长序列预测扩展方案，结合装机容量、天气、云量、降雨概率等特征输出发电量和收益趋势。
 - **企业级架构拆分**：前端工作台、Node.js 业务服务、Python AI 推理服务、Nginx 网关、PostGIS 空间数据层和企业中间件分层设计。
 - **业务闭环完整**：覆盖线索发现、业务跟进、预约勘察、方案测算、项目进度、电站收益和售后工单。
 - **工程文档完整**：沉淀架构图、部署拓扑、功能截图、核心模块表格和关键代码片段，覆盖从业务建模到服务部署的主要环节。
@@ -23,8 +23,8 @@
 | --- | --- |
 | 前端工作台 | HTML5、CSS3、JavaScript、Leaflet、ECharts、Canvas |
 | 业务服务 | Node.js、REST API、JWT、Fetch API |
-| AI 推理 | Python、FastAPI、Uvicorn、PyTorch、YOLO11、OpenCV、Transformer |
-| 预测建模 | scikit-learn、XGBoost、LightGBM、时间序列特征工程 |
+| AI 推理 | Python、FastAPI、Uvicorn、PyTorch、YOLO11、OpenCV |
+| 预测建模 | scikit-learn、LightGBM、XGBoost、Transformer、时间序列特征工程 |
 | GIS 与遥感 | 高德地图 Web 服务、卫星影像瓦片、GeoPandas、Rasterio、GDAL、PostGIS |
 | 数据与中间件 | PostgreSQL、PostGIS、Redis、Elasticsearch、MinIO、RabbitMQ |
 | 工程部署 | Docker、Docker Compose、Nginx |
@@ -68,7 +68,7 @@ flowchart LR
   Lead --> MQ["RabbitMQ 异步任务"]
 
   AI --> Vision["YOLO11 / OpenCV"]
-  Forecast --> Model["Transformer / XGBoost / LightGBM"]
+  Forecast --> Model["LightGBM / XGBoost / Transformer"]
 ```
 
 ## 部署拓扑
